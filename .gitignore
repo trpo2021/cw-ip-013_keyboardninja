@@ -12,6 +12,6 @@
 
 *.a
 
-bin/ninja
+bin/ninja/ninja
 
 
