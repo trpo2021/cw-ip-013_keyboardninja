@@ -36,21 +36,14 @@ int main()
         spr_mas[j].Add_method(str);
     }
 
-
-
-
     RenderWindow window(VideoMode(1536, 960), "KeyBoardNinja");
 
     Time delayTime = sf::milliseconds(100);
     int isPause = 0, hp = 3;
     Difficult choose;
 
-
-
     if (!main_menu(window, choose, spr_mas))
         return 0; // вызов главного меню
-
-
 
     while (window.isOpen()) { //Основное тело программы, пока что тут описана
 
