@@ -1,122 +1,157 @@
 #include <SFML/Graphics.hpp>
 
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+
 #include "ninjalib/helper.h"
 #include "ninjalib/main_menu.h"
- // что бы не писать постоянно sf::
-
-void Generate_letter(sf::Sprite& letter)
-{ // Выдать спрайту рандомную букву
-    using namespace sf;
-    int Letters[26][3], kind = 0;
-    int i;
-    int x = 28, y = 9;
-    int x_growth = 0, y_growth = 0;
-    for (i = 0; i < 26; i++) {
-        Letters[i][0] = i;
-        Letters[i][1] = x + x_growth;
-        Letters[i][2] = y + y_growth;
-        x_growth += 114;
-        if (i == 8 || i == 17) {
-            y_growth += 154;
-            x_growth = 0;
-        }
-    }
-    kind = rand() % 27 - 3;
-    letter.setTextureRect(IntRect(Letters[kind][1], Letters[kind][2], 83, 111));
-}
 
 int main()
+
 {
     using namespace sf;
+
+    std::ifstream inf_images("src/ninja/images_names.txt");
+    std::string str[help::line_count];
+    if (!(inf_images.is_open())) {
+        inf_images.close();
+        std::cerr << "Ошибка: файл не открылся\n";
+        exit(1);
+    }
+
+    My_Sprite spr_mas[help::count_images];
+    for (int j = 0; j < help::count_images && inf_images; j++) {
+        for (int i = 0; i < 3; i++) {
+            inf_images >> str[i];
+            if (isalpha(str[1][0])) {
+                spr_mas[j].Add_method1(str[0]);
+                swap(str[0], str[1]);
+                i--;
+                j++;
+            }
+        }
+        spr_mas[j].Add_method(str);
+    }
+
+
+
+
     RenderWindow window(VideoMode(1536, 960), "KeyBoardNinja");
-    Texture tex_pause, tex_hp, tex_game_bg, tex_menu_pause, tex_letters;
-    tex_pause.loadFromFile("images/pause.png");
-    tex_hp.loadFromFile("images/hp.png");
-    tex_game_bg.loadFromFile("images/game_bg.jpg");
-    tex_menu_pause.loadFromFile("images/menu_pause.png");
-    tex_letters.loadFromFile("images/letters_tex.png");
-
-    Sprite pause(tex_pause), game_bg(tex_game_bg), hp1(tex_hp), hp2(tex_hp),
-            hp3(tex_hp), menu_pause(tex_menu_pause), letter;
-
-    letter.setTexture(tex_letters);
-    pause.setPosition(0, 0);
-    hp1.setPosition(5, 124);
-    hp2.setPosition(5, 209);
-    hp3.setPosition(5, 294);
-    menu_pause.setPosition(504, 356);
-    letter.setPosition(500, 0);
 
     Time delayTime = sf::milliseconds(100);
-    int difficult = 0, isPause = 0, hp = 3;
+    int isPause = 0, hp = 3;
+    Difficult choose;
 
-    if (!main_menu(window, difficult))
+
+
+    if (!main_menu(window, choose, spr_mas))
         return 0; // вызов главного меню
 
+
+
     while (window.isOpen()) { //Основное тело программы, пока что тут описана
-                              //только кнопка паузы и условного получения урона
+
+        //только кнопка паузы и условного получения урона
 
         // Нужно для закрытия проги через "крестик"
+
         Event event;
+
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
+
                 window.close();
         }
 
         if (!isPause) {
-            pause.setColor(Color::White);
+            spr_mas[8].m_sprite.setColor(Color::White);
+
             if (IntRect(0, 1, 90, 89).contains(Mouse::getPosition(window))) {
-                pause.setColor(Color::Red);
+                spr_mas[8].m_sprite.setColor(Color::Red);
+
                 if (Mouse::isButtonPressed(Mouse::Left))
+
                     isPause = 1;
             }
+
             // Generate_letter(letter);
+
             // Основые игровые функции вставлять сюда
         }
+
         // Действия в меню паузы
+
         while (isPause) {
-            window.draw(menu_pause);
+            window.draw(spr_mas[13].m_sprite);
+
             window.display();
+
             if (IntRect(586, 411, 148, 45).contains(Mouse::getPosition(window))
+
                 && Mouse::isButtonPressed(Mouse::Left))
+
                 isPause = 0;
+
             if (IntRect(788, 415, 148, 45).contains(Mouse::getPosition(window))
+
                 && Mouse::isButtonPressed(Mouse::Left)) {
                 printf("\npressed replay\n");
+
                 isPause = 0;
             }
+
             if (IntRect(649, 455, 224, 45).contains(Mouse::getPosition(window))
+
                 && Mouse::isButtonPressed(Mouse::Left)) {
-                if (!main_menu(window, difficult))
+                if (!main_menu(window, choose, spr_mas))
+
                     return 0;
+
                 isPause = 0;
+
                 hp = 3;
             }
+
             if (IntRect(724, 504, 75, 45).contains(Mouse::getPosition(window))
+
                 && Mouse::isButtonPressed(Mouse::Left))
+
                 return 0;
         }
-        window.draw(game_bg);
-        window.draw(pause);
+
+        window.draw(spr_mas[12].m_sprite);
+
+        window.draw(spr_mas[8].m_sprite);
 
         // Дальше пример получения урона, сейчас это просто правый клик мыши:
+
         if (Mouse::isButtonPressed(Mouse::Right)) {
             hp--;
+
             sleep(delayTime);
         }
+
         if (hp == 3) {
-            window.draw(hp1);
-            window.draw(hp2);
-            window.draw(hp3);
+            window.draw(spr_mas[9].m_sprite);
+
+            window.draw(spr_mas[10].m_sprite);
+
+            window.draw(spr_mas[11].m_sprite);
         }
+
         if (hp == 2) {
-            window.draw(hp1);
-            window.draw(hp2);
+            window.draw(spr_mas[9].m_sprite);
+
+            window.draw(spr_mas[10].m_sprite);
         }
+
         if (hp == 1)
-            window.draw(hp1);
-        // letter.move(0, 0.05);	//Пример падения буквы
-        // window.draw(letter);
+
+            window.draw(spr_mas[9].m_sprite);
+
         window.display();
     }
 

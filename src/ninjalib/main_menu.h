@@ -1,3 +1,7 @@
-#pragma once 
+#pragma once
+#include <SFML/Graphics.hpp>
 
-int main_menu(sf::RenderWindow& window, int& difficulty);
+#include "helper.h"
+
+int main_menu(
+        sf::RenderWindow& window, Difficult& difficulty, My_Sprite* spr_mas);
