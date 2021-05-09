@@ -57,10 +57,21 @@ int start_game(int& showMenu)
     int bomb_key = -1; // Номер нажатия для генерации бомбы
     int score = 0;
 
+    Font font;
+    if (!font.loadFromFile("src/ninja/font.ttf")) {
+        std::cerr << "Can't finde .ttf ";
+    }
+
+    Text txt_score("", font, 60);
+    txt_score.setFillColor(Color::White);
+    txt_score.setPosition(95, 25);
+
     while (window.isOpen()) { //Основное тело программы
         float time = clock.getElapsedTime().asSeconds();
         clock.restart();
         timer += time;
+
+        std::ostringstream char_score;
 
         Event event;
 
@@ -71,11 +82,16 @@ int start_game(int& showMenu)
             if (event.type == sf::Event::KeyPressed) {
                 press_count++;
                 std::cout << "Key Pressed " << event.key.code << "\n";
+                // if (M.Check_code_key(event.key.code,hp)) std::cout << "Key "
+                // << event.key.code << " Delete letter" << "\n";
                 M.Check_code_key(
                         event.key.code, hp, score, spr_mas[SPR_HP].m_sprite);
                 std::cout << "Score now " << score << "\n";
             }
         }
+
+        char_score << score;
+        txt_score.setString(char_score.str());
 
         if (hp == 0) {
             return 0;
@@ -149,6 +165,8 @@ int start_game(int& showMenu)
         window.draw(spr_mas[SPR_HP].m_sprite);
 
         window.draw(M.Move_letter(M.m_sprite, difficult));
+
+        window.draw(txt_score);
 
         window.display();
     }
