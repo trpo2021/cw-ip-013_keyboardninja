@@ -4,11 +4,10 @@ LIB_NAME = ninjalib
 
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -MMD -I sfml/include -I src    
-FLAG = export LD_LIBRARY_PATH=~/cw-ip-013_keyboardninja/sfml/lib:${LD_LIBRARY_PATH}
 
 
-PATH_SFML = -L sfml/lib
-LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+PATH_SFML =  sfml/lib
+LIBS = -L $(PATH_SFML) -Wl,-rpath=sfml/lib  -lsfml-graphics -lsfml-window -lsfml-system 
 
 CC = g++
 CXX = clang++
@@ -43,14 +42,16 @@ all: $(APP_PATH)
 -include $(DEPS)
 	
 
-$(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $^  -o $@ $(PATH_SFML) $(LIBS)  
+$(APP_PATH): $(APP_OBJECTS) $(LIB_PATH) 
+	$(CC) $(CFLAGS) $(CPPFLAGS) $^  -o $@ $(LIBS)  
 
 $(LIB_PATH): $(LIB_OBJECTS)
 	ar rcs $@ $^
 
 $(OBJ_DIR)/%.o: %.$(SRC_EXT) 
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@ 
+
+	
 
 .PHONY: clean
 clean:
