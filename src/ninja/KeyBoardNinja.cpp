@@ -53,6 +53,8 @@ int start_game(int& showMenu)
         if (!main_menu(window, difficult, spr_mas))
             return 0; // вызов главного меню
 
+    int press_count = 0; // счетчик нажатий
+    int bomb_key = -1; // Номер нажатия для генерации бомбы
     int score = 0;
 
     while (window.isOpen()) { //Основное тело программы
@@ -67,6 +69,7 @@ int start_game(int& showMenu)
                 window.close();
 
             if (event.type == sf::Event::KeyPressed) {
+                press_count++;
                 std::cout << "Key Pressed " << event.key.code << "\n";
                 M.Check_code_key(
                         event.key.code, hp, score, spr_mas[SPR_HP].m_sprite);
@@ -88,11 +91,21 @@ int start_game(int& showMenu)
 
                     isPause = 1;
             }
+            if (press_count
+                == 5) { // Генерация бомб активируется после 5 нажатия
+                bomb_key = 5 + rand() % 5 - 0
+                        + 1; // Следущее нажатие в промежутке от 5 до 10 будет
+                // генерить бомбу
+            }
 
             if (timer > deley) { // Генерирует новое место и значение для буквы
                 // M каждые delay сек.
                 int x = 200 + (rand() % (1338 - 150 + 1));
-                M.Get_Letter(0, "letters_tex.png", x, 0);
+                if (press_count == bomb_key) { // Нажатие для генирации бомбы.
+                    M.Get_Letter(1, "letters_tex.png", x, 0);
+                    press_count = 0;
+                } else
+                    M.Get_Letter(0, "letters_tex.png", x, 0);
                 timer = 0;
             }
         }
