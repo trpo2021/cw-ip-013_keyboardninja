@@ -8,8 +8,6 @@ Difficulty.jpg 0 0
 ShowScore.jpg 0 0
 pause.png 0 0
 hp.png 5 124
-hp.png 5 209
-hp.png 5 294
 game_bg.jpg
 menu_pause.png 504 356
-
+letters_tex_png
