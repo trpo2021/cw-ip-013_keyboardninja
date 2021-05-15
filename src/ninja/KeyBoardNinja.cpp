@@ -215,10 +215,3 @@ int main()
     gameRunning(showMenu);
     return 0;
 }
-
-// if (!main_menu(window, difficult, static_spr_mas))
-//     return 0;
-
-// isPause = 0;
-// hp = 3;
-// score = 0;

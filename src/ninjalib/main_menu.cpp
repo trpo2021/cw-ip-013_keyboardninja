@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 
-#include "Select.h"
 #include "helper.h"
 
 int main_menu(
@@ -10,7 +9,6 @@ int main_menu(
 { // Функция главного меню
     using namespace sf;
 
-    int select = 0;
     int isMenu = 1, ShowRules = 0, ShowDiff = 0, ShowScores = 0;
 
     while (isMenu) {
@@ -18,41 +16,56 @@ int main_menu(
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
                 window.close();
-        }
 
-        static_spr_mas[SPR_SCORE_MENU]->Get_sprite().setColor(Color::White);
-        static_spr_mas[SPR_START]->Get_sprite().setColor(Color::White);
-        static_spr_mas[SPR_ABOUT]->Get_sprite().setColor(Color::White);
-        static_spr_mas[SPR_EXIT]->Get_sprite().setColor(Color::White);
-
-        select = 0;
-
-        if (!ShowDiff && !ShowScores) {
-            if (IntRect(31, 19, 490, 60).contains(Mouse::getPosition(window))) {
+            if (!ShowDiff && !ShowScores) {
                 static_spr_mas[SPR_SCORE_MENU]->Get_sprite().setColor(
-                        Color::Red);
-                select = 1;
-            }
-            if (IntRect(100, 110, 350, 60)
-                        .contains(Mouse::getPosition(window))) {
-                static_spr_mas[SPR_START]->Get_sprite().setColor(Color::Red);
-                select = 2;
-            }
-            if (IntRect(180, 217, 170, 50)
-                        .contains(Mouse::getPosition(window))) {
-                static_spr_mas[SPR_ABOUT]->Get_sprite().setColor(Color::Red);
-                select = 3;
-            }
-            if (IntRect(200, 315, 130, 55)
-                        .contains(Mouse::getPosition(window))) {
-                static_spr_mas[SPR_EXIT]->Get_sprite().setColor(Color::Red);
-                select = 4;
-            }
-        }
+                        Color::White);
+                if (IntRect(31, 19, 490, 60)
+                            .contains(Mouse::getPosition(window))) {
+                    static_spr_mas[SPR_SCORE_MENU]->Get_sprite().setColor(
+                            Color::Red);
+                    if (Mouse::isButtonPressed(Mouse::Left)) {
+                        if (!ShowScores)
+                            ShowScores = 1;
+                        else
+                            ShowScores = 0;
+                    }
+                }
 
-        if (Mouse::isButtonPressed(Mouse::Left)) {
-            if (!Select(select, ShowDiff, ShowRules, ShowScores))
-                return 0;
+                static_spr_mas[SPR_START]->Get_sprite().setColor(Color::White);
+                if (IntRect(100, 110, 350, 60)
+                            .contains(Mouse::getPosition(window))) {
+                    static_spr_mas[SPR_START]->Get_sprite().setColor(
+                            Color::Red);
+                    if (Mouse::isButtonPressed(Mouse::Left)) {
+                        if (!ShowDiff)
+                            ShowDiff = 1;
+                        else
+                            ShowDiff = 0;
+                    }
+                }
+
+                static_spr_mas[SPR_ABOUT]->Get_sprite().setColor(Color::White);
+                if (IntRect(180, 217, 170, 50)
+                            .contains(Mouse::getPosition(window))) {
+                    static_spr_mas[SPR_ABOUT]->Get_sprite().setColor(
+                            Color::Red);
+                    if (Mouse::isButtonPressed(Mouse::Left)) {
+                        if (!ShowRules)
+                            ShowRules = 1;
+                        else
+                            ShowRules = 0;
+                    }
+                }
+
+                static_spr_mas[SPR_EXIT]->Get_sprite().setColor(Color::White);
+                if (IntRect(200, 315, 130, 55)
+                            .contains(Mouse::getPosition(window))) {
+                    static_spr_mas[SPR_EXIT]->Get_sprite().setColor(Color::Red);
+                    if (Mouse::isButtonPressed(Mouse::Left))
+                        return 0;
+                }
+            }
         }
 
         window.draw(static_spr_mas[SPR_BG]->Get_sprite());
@@ -80,21 +93,21 @@ int main_menu(
                     IntRect(373, 349, 217, 257)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0005, 0.3, 5);
+                difficult.Diff_choose(0.005, 0.1, 5);
 
                 isMenu = false;
             } else if (
                     IntRect(667, 355, 210, 247)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0010, 0.4, 7);
+                difficult.Diff_choose(0.0010, 0.1, 7);
 
                 isMenu = false;
             } else if (
                     IntRect(954, 352, 204, 286)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0015, 0.5, 10);
+                difficult.Diff_choose(0.0015, 0.1, 10);
                 isMenu = false;
             }
         }
