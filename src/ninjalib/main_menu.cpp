@@ -62,14 +62,14 @@ int main_menu(
         window.draw(static_spr_mas[SPR_SCORE_MENU]->Get_sprite());
 
         if (ShowRules)
-			window.draw(static_spr_mas[SPR_RULES]->Get_sprite());
+            window.draw(static_spr_mas[SPR_RULES]->Get_sprite());
 
-		if (ShowScores) {
-			window.draw(static_spr_mas[SPR_SHOWSCORE]->Get_sprite());
-			if (IntRect(315, 826, 490, 50).contains(Mouse::getPosition(window))
-				&& Mouse::isButtonPressed(Mouse::Left))
-				ShowScores = 0;
-		}
+        if (ShowScores) {
+            window.draw(static_spr_mas[SPR_SHOWSCORE]->Get_sprite());
+            if (IntRect(315, 826, 490, 50).contains(Mouse::getPosition(window))
+                && Mouse::isButtonPressed(Mouse::Left))
+                ShowScores = 0;
+        }
 
         if (ShowDiff) {
             window.draw(static_spr_mas[SPR_DIFF]->Get_sprite());
