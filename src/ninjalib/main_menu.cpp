@@ -1,6 +1,7 @@
+#include <SFML/Graphics.hpp>
+
 #include "Select.h"
 #include "helper.h"
-#include <SFML/Graphics.hpp>
 
 int main_menu(
         sf::RenderWindow& window,
@@ -59,6 +60,16 @@ int main_menu(
         window.draw(static_spr_mas[SPR_ABOUT]->Get_sprite());
         window.draw(static_spr_mas[SPR_EXIT]->Get_sprite());
         window.draw(static_spr_mas[SPR_SCORE_MENU]->Get_sprite());
+
+        if (ShowRules)
+			window.draw(static_spr_mas[SPR_RULES]->Get_sprite());
+
+		if (ShowScores) {
+			window.draw(static_spr_mas[SPR_SHOWSCORE]->Get_sprite());
+			if (IntRect(315, 826, 490, 50).contains(Mouse::getPosition(window))
+				&& Mouse::isButtonPressed(Mouse::Left))
+				ShowScores = 0;
+		}
 
         if (ShowDiff) {
             window.draw(static_spr_mas[SPR_DIFF]->Get_sprite());
