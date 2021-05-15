@@ -67,21 +67,21 @@ int main_menu(sf::RenderWindow& window, Difficult& difficult, std::vector <My_Sp
                     IntRect(373, 349, 217, 257)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0005, 0.4, 5);
+                difficult.Diff_choose(0.0005, 0.3, 5);
 
                 isMenu = false;
             } else if (
                     IntRect(667, 355, 210, 247)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0010, 0.5, 7);
+                difficult.Diff_choose(0.0010, 0.4, 7);
 
                 isMenu = false;
             } else if (
                     IntRect(954, 352, 204, 286)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0015, 0.6, 10);
+                difficult.Diff_choose(0.0015, 0.5, 10);
                 isMenu = false;
             }
         }

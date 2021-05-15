@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <list>
@@ -9,8 +8,6 @@
 #include <list>
 
 using namespace sf;
-
-bool Select(int select, int& ShowDiff, int& ShowRules, int& ShowScores);
 
 namespace help {
 	//const int count_images = 13;

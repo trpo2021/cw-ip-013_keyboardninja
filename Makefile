@@ -2,7 +2,7 @@ APP_NAME = ninja
 LIB_NAME = ninjalib
 
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -W -Werror
 CPPFLAGS = -MMD -I sfml/include -I src    
 
 
