@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-bool start_game(int& showMenu)
+int start_game(int& showMenu)
 {
     srand(static_cast<unsigned int>(time(0)));
     using namespace sf;
@@ -49,11 +49,13 @@ bool start_game(int& showMenu)
 
     Difficult difficult;
 
-    if (!main_menu(window, difficult, static_spr_mas))
-        return 0;
+    if (showMenu == 1) {
+        if (!main_menu(window, difficult, static_spr_mas))
+            return 0;
+    }
 
     int press_count = 0;
-    int bomb_key = -1;
+    int bomb_key = 0;
     int score = 0;
 
     Font font;
@@ -108,14 +110,15 @@ bool start_game(int& showMenu)
 
             if (press_count
                 == 5) { // Генерация бомб активируется после 5 нажатия
-                bomb_key = 5 + (rand() % 5);
+                bomb_key = press_count + (rand() % 5);
             }
 
             if (timer > deley) { // Генерирует новое место и значение для буквы
                                  // M каждые delay сек.
 
                 int x = 200 + (rand() % (1338 - 150 + 1));
-                if (press_count == bomb_key) { // Нажатие для генирации бомбы.
+                if (press_count >= bomb_key
+                    && bomb_key) { // Нажатие для генирации бомбы.
                     list_letters.push_back(new Letters(
                             1,
                             static_spr_mas[SPR_LETTERS]->Get_Texture(),
@@ -179,7 +182,7 @@ bool start_game(int& showMenu)
         window.draw(static_spr_mas[SPR_PAUSE]->Get_sprite());
 
         if (hp <= 0) {
-            return 1;
+            return 0;
         } // Если хп кончилось - игра оконченна
 
         for (std::list<Letters*>::iterator it = list_letters.begin();
