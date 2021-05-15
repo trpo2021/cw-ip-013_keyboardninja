@@ -1,7 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 
-#include "helper.h"
+int main_menu(sf::RenderWindow& window, Difficult &difficulty, std::vector <My_Sprite*> &_static_spr_mas);
 
-int main_menu(
-        sf::RenderWindow& window, Difficult& difficulty, My_Sprite* spr_mas);
