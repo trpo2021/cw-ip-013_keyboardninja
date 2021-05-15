@@ -2,9 +2,8 @@ APP_NAME = ninja
 LIB_NAME = ninjalib
 
 
-CFLAGS = -W -Werror
+CFLAGS = -Wall -Werror
 CPPFLAGS = -MMD -I sfml/include -I src    
-
 
 PATH_SFML =  sfml/lib
 LIBS = -L $(PATH_SFML) -Wl,-rpath=sfml/lib  -lsfml-graphics -lsfml-window -lsfml-system 
@@ -18,10 +17,8 @@ SRC_DIR = src
 SFML_DIR = sfml
 SFML_INCLUDE = include
 
-
 APP_PATH = $(BIN_DIR)/$(APP_NAME)/$(APP_NAME)
 LIB_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_NAME).a
-
 
 SRC_EXT = cpp
 HPP_EXT = hpp
