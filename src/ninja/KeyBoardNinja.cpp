@@ -20,7 +20,7 @@ bool start_game(int& showMenu)
     float deley = 1;
     Clock clock;
 
-    std::ifstream inf_images("src/ninja/images_names.txt");
+    std::ifstream inf_images("src/ninja/static_images_names.txt");
     std::string str[help::line_count];
     if (!(inf_images.is_open())) {
         inf_images.close();
