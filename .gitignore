@@ -6,5 +6,5 @@
 *.out
 *.a
 bin/ninja/ninja
-
+*.vscode
 

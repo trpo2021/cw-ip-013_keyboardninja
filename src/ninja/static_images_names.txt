@@ -10,4 +10,4 @@ pause.png 0 0
 hp.png 5 124
 game_bg.jpg
 menu_pause.png 504 356
-letters_tex_png
+letters_tex.png
