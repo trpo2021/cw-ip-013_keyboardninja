@@ -1,6 +1,7 @@
 #include "helper.h"
 
 #include <SFML/Graphics.hpp>
+#include <ctime>
 #include <iostream>
 #include <iterator>
 #include <list>
@@ -111,12 +112,11 @@ void Press_button(
     }
 }
 
-sf::Sprite Letters::Move_letter(sf::Sprite sprite, Difficult dif)
+void Letters::Update(sf::Sprite& sprite, Difficult dif, float time)
 {
+    m_coordinate_y += dif.m_start_speed * time;
+    dif.m_start_speed += dif.m_boost; // Не работает.
     sprite.setPosition(m_coordinate_x, m_coordinate_y);
-    m_coordinate_y += dif.m_start_speed;
-    dif.m_start_speed += dif.m_boost;
-    return sprite;
 }
 
 bool Letters::Delete_letter_beyond(Letters* letter)

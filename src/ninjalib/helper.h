@@ -7,7 +7,7 @@
 #include <string>
 
 namespace help {
-// const int count_images = 13;
+// const int count_images = 17;
 const int line_count = 3;
 const int string_columns = 3;
 }
@@ -89,7 +89,7 @@ public:
     bool Delete_letter_beyond(Letters* letter);
     bool Check_code_key(int key, int& score);
     bool Isbomb();
-    sf::Sprite Move_letter(sf::Sprite sprite, Difficult dif);
+    void Update(sf::Sprite& sprite, Difficult dif, float time);
 };
 
 void Press_button(

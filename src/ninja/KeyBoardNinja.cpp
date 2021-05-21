@@ -17,7 +17,7 @@ int start_game(int& showMenu)
     using namespace sf;
 
     float timer = 0;
-    float deley = 1;
+    float deley = 1000;
     Clock clock;
 
     std::ifstream inf_images("src/ninja/static_images_names.txt");
@@ -45,7 +45,8 @@ int start_game(int& showMenu)
 
     RenderWindow window(VideoMode(1536, 960), "KeyBoardNinja");
 
-    int isPause = 0, hp = 3;
+    int isPause = 0;
+    int hp = 3;
 
     Difficult difficult;
 
@@ -70,10 +71,10 @@ int start_game(int& showMenu)
     std::list<Letters*> list_letters;
 
     while (window.isOpen()) {
-        float time = clock.getElapsedTime().asSeconds();
+        float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
+        time /= 800;
         timer += time;
-        // time /= 0,8;
 
         std::ostringstream char_score;
 
@@ -97,8 +98,12 @@ int start_game(int& showMenu)
 
         char_score << score;
         txt_score.setString(char_score.str());
+        window.draw(static_spr_mas[SPR_GAME_BG]->Get_sprite());
+        window.draw(txt_score);
+        window.draw(static_spr_mas[SPR_HP]->Get_sprite());
+        window.draw(static_spr_mas[SPR_PAUSE]->Get_sprite());
 
-        if (!isPause) {
+        if (!isPause && hp > 0) {
             static_spr_mas[8]->Get_sprite().setColor(Color::White);
 
             if (IntRect(0, 1, 90, 89).contains(Mouse::getPosition(window))) {
@@ -141,58 +146,48 @@ int start_game(int& showMenu)
                     it = list_letters.erase(it);
                 } else
                     ++it;
+
+            for (std::list<Letters*>::iterator it = list_letters.begin();
+                 it != list_letters.end();
+                 it++) {
+                (*it)->Update((*it)->Get_sprite(), difficult, time);
+                window.draw((*it)->Get_sprite());
+            }
         }
-
+        window.display();
         // Действия в меню паузы
-
         while (isPause) {
-            window.draw(static_spr_mas[SPR_MENU_PAUSE]->Get_sprite());
+            while (window.pollEvent(event))
+                if (event.type == Event::Closed)
+                    window.close();
 
+            window.draw(static_spr_mas[SPR_MENU_PAUSE]->Get_sprite());
             window.display();
 
             if (IntRect(586, 411, 148, 45).contains(Mouse::getPosition(window))
-
-                && Mouse::isButtonPressed(Mouse::Left))
-
+                && Mouse::isButtonPressed(Mouse::Left)) {
+                clock.restart();
                 isPause = 0;
+            }
 
             if (IntRect(788, 415, 148, 45).contains(Mouse::getPosition(window))
-
                 && Mouse::isButtonPressed(Mouse::Left)) {
                 return -1;
             }
 
             if (IntRect(649, 455, 224, 45).contains(Mouse::getPosition(window))
-
                 && Mouse::isButtonPressed(Mouse::Left)) {
                 return 1;
             }
 
             if (IntRect(724, 504, 75, 45).contains(Mouse::getPosition(window))
-
                 && Mouse::isButtonPressed(Mouse::Left))
-
                 return 0;
         }
-
-        window.draw(static_spr_mas[SPR_GAME_BG]->Get_sprite());
-
-        window.draw(static_spr_mas[SPR_HP]->Get_sprite());
-
-        window.draw(static_spr_mas[SPR_PAUSE]->Get_sprite());
 
         if (hp <= 0) {
             return 0;
         } // Если хп кончилось - игра оконченна
-
-        for (std::list<Letters*>::iterator it = list_letters.begin();
-             it != list_letters.end();
-             it++)
-            window.draw((*it)->Move_letter((*it)->Get_sprite(), difficult));
-
-        window.draw(txt_score);
-
-        window.display();
     }
     return 0;
 }
