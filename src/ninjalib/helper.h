@@ -112,5 +112,9 @@ enum M_Sprite {
     SPR_HP,
     SPR_GAME_BG,
     SPR_MENU_PAUSE,
-    SPR_LETTERS
+    SPR_LETTERS,
+    SPR_DEAD_MENU,
+    SPR_DM_REPLAY,
+    SPR_DM_GOTOMENU,
+    SPR_DM_EXIT
 };

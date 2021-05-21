@@ -96,6 +96,35 @@ int start_game(int& showMenu)
             }
         }
 
+        while (!hp) {
+            while (window.pollEvent(event))
+                if (event.type == Event::Closed)
+                    window.close();
+            int i, j;
+            for (i = 13; i < 17; i++)
+                window.draw(static_spr_mas[i]->Get_sprite());
+            txt_score.setPosition(800, 380);
+            window.draw(txt_score);
+            window.display();
+            for (i = 450, j = 14; i <= 650; i += 100, j++) {
+                static_spr_mas[j]->Get_sprite().setColor(Color::White);
+                if (IntRect(660, i, 210, 80)
+                            .contains(Mouse::getPosition(window))) {
+                    static_spr_mas[j]->Get_sprite().setColor(Color::Red);
+                    if (Mouse::isButtonPressed(Mouse::Left)) {
+                        switch (j) {
+                        case 14:
+                            return -1;
+                        case 15:
+                            return 1;
+                        case 16:
+                            return 0;
+                        }
+                    }
+                }
+            }
+        }
+
         char_score << score;
         txt_score.setString(char_score.str());
         window.draw(static_spr_mas[SPR_GAME_BG]->Get_sprite());
@@ -184,10 +213,6 @@ int start_game(int& showMenu)
                 && Mouse::isButtonPressed(Mouse::Left))
                 return 0;
         }
-
-        if (hp <= 0) {
-            return 0;
-        } // Если хп кончилось - игра оконченна
     }
     return 0;
 }
