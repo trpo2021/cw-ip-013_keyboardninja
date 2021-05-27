@@ -100,17 +100,17 @@ void Press_button(
         int code);
 
 enum M_Sprite {
+    SPR_BG,
     SPR_START,
     SPR_ABOUT,
     SPR_SCORE_MENU,
     SPR_EXIT,
-    SPR_BG,
     SPR_RULES,
     SPR_DIFF,
     SPR_SHOWSCORE,
+    SPR_GAME_BG,
     SPR_PAUSE,
     SPR_HP,
-    SPR_GAME_BG,
     SPR_MENU_PAUSE,
     SPR_LETTERS,
     SPR_DEAD_MENU,

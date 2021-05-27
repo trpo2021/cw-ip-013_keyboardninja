@@ -68,11 +68,8 @@ int main_menu(
             }
         }
 
-        window.draw(static_spr_mas[SPR_BG]->Get_sprite());
-        window.draw(static_spr_mas[SPR_START]->Get_sprite());
-        window.draw(static_spr_mas[SPR_ABOUT]->Get_sprite());
-        window.draw(static_spr_mas[SPR_EXIT]->Get_sprite());
-        window.draw(static_spr_mas[SPR_SCORE_MENU]->Get_sprite());
+        for (int i = 0; i < 5; i++)
+            window.draw(static_spr_mas[i]->Get_sprite());
 
         if (ShowRules)
             window.draw(static_spr_mas[SPR_RULES]->Get_sprite());

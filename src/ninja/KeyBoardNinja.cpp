@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+Difficult difficult;
+
 int start_game(int& showMenu)
 {
     srand(static_cast<unsigned int>(time(0)));
@@ -48,8 +50,6 @@ int start_game(int& showMenu)
     int isPause = 0;
     int hp = 3;
 
-    Difficult difficult;
-
     if (showMenu == 1) {
         if (!main_menu(window, difficult, static_spr_mas))
             return 0;
@@ -70,6 +70,7 @@ int start_game(int& showMenu)
 
     std::list<Letters*> list_letters;
 
+    clock.restart();
     while (window.isOpen()) {
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
@@ -127,16 +128,16 @@ int start_game(int& showMenu)
 
         char_score << score;
         txt_score.setString(char_score.str());
-        window.draw(static_spr_mas[SPR_GAME_BG]->Get_sprite());
+
+        for (int i = 8; i < 11; i++)
+            window.draw(static_spr_mas[i]->Get_sprite());
         window.draw(txt_score);
-        window.draw(static_spr_mas[SPR_HP]->Get_sprite());
-        window.draw(static_spr_mas[SPR_PAUSE]->Get_sprite());
 
         if (!isPause && hp > 0) {
-            static_spr_mas[8]->Get_sprite().setColor(Color::White);
+            static_spr_mas[SPR_PAUSE]->Get_sprite().setColor(Color::White);
 
             if (IntRect(0, 1, 90, 89).contains(Mouse::getPosition(window))) {
-                static_spr_mas[8]->Get_sprite().setColor(Color::Red);
+                static_spr_mas[SPR_PAUSE]->Get_sprite().setColor(Color::Red);
 
                 if (Mouse::isButtonPressed(Mouse::Left))
                     isPause = 1;
