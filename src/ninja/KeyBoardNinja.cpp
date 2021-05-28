@@ -58,6 +58,7 @@ int start_game(int& showMenu)
     int press_count = 0;
     int bomb_key = 0;
     int score = 0;
+    int BG_num = 16 + rand() % 9;
 
     Font font;
     if (!font.loadFromFile("src/ninja/font.ttf")) {
@@ -102,23 +103,23 @@ int start_game(int& showMenu)
                 if (event.type == Event::Closed)
                     window.close();
             int i, j;
-            for (i = 13; i < 17; i++)
+            for (i = 12; i < 16; i++)
                 window.draw(static_spr_mas[i]->Get_sprite());
             txt_score.setPosition(800, 380);
             window.draw(txt_score);
             window.display();
-            for (i = 450, j = 14; i <= 650; i += 100, j++) {
+            for (i = 450, j = 13; i <= 650; i += 100, j++) {
                 static_spr_mas[j]->Get_sprite().setColor(Color::White);
                 if (IntRect(660, i, 210, 80)
                             .contains(Mouse::getPosition(window))) {
                     static_spr_mas[j]->Get_sprite().setColor(Color::Red);
                     if (Mouse::isButtonPressed(Mouse::Left)) {
                         switch (j) {
-                        case 14:
+                        case 13:
                             return -1;
-                        case 15:
+                        case 14:
                             return 1;
-                        case 16:
+                        case 15:
                             return 0;
                         }
                     }
@@ -129,7 +130,8 @@ int start_game(int& showMenu)
         char_score << score;
         txt_score.setString(char_score.str());
 
-        for (int i = 8; i < 11; i++)
+        window.draw(static_spr_mas[BG_num]->Get_sprite());
+        for (int i = 8; i < 10; i++)
             window.draw(static_spr_mas[i]->Get_sprite());
         window.draw(txt_score);
 

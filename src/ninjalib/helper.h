@@ -108,7 +108,6 @@ enum M_Sprite {
     SPR_RULES,
     SPR_DIFF,
     SPR_SHOWSCORE,
-    SPR_GAME_BG,
     SPR_PAUSE,
     SPR_HP,
     SPR_MENU_PAUSE,
@@ -116,5 +115,13 @@ enum M_Sprite {
     SPR_DEAD_MENU,
     SPR_DM_REPLAY,
     SPR_DM_GOTOMENU,
-    SPR_DM_EXIT
+    SPR_DM_EXIT,
+    SPR_GAME_BG_1,
+    SPR_GAME_BG_2,
+    SPR_GAME_BG_3,
+    SPR_GAME_BG_4,
+    SPR_GAME_BG_5,
+    SPR_GAME_BG_6,
+    SPR_GAME_BG_7,
+    SPR_GAME_BG_8
 };
