@@ -37,8 +37,15 @@ struct Difficult {
     float m_boost, m_start_speed /*, m_time*/;
     int m_barrier, m_choice;
 
-    Difficult(float boost = 0.2, float speed = 0.2, int barrier = 4, int choice = 0)
-        : m_boost(boost), m_start_speed(speed), m_barrier(barrier), m_choice(choice)
+    Difficult(
+            float boost = 0.2,
+            float speed = 0.2,
+            int barrier = 4,
+            int choice = 0)
+        : m_boost(boost),
+          m_start_speed(speed),
+          m_barrier(barrier),
+          m_choice(choice)
     {
     }
     void Diff_choose(float boost, float speed, int barrier, int choice)
@@ -120,5 +127,5 @@ enum M_Sprite {
     SPR_GAME_BG_8
 };
 
-void scoreInput(sf::Text txt_score, sf::RenderWindow &window);
+void scoreInput(sf::Text txt_score, sf::RenderWindow& window);
 void scoreOutput(int score, int choice);
