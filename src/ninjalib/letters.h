@@ -1,0 +1,52 @@
+#pragma once
+#include <SFML/Graphics.hpp>
+
+#include "helper.h"
+
+#include <iostream>
+#include <list>
+
+class Letters : public My_Sprite {
+private:
+    int m_code_key;
+    int m_code_letters[26] = {16, 22, 4, 17, 19, 24, 20, 8,  14, 15, 0, 18, 3,
+                              5,  6,  7, 9,  10, 11, 25, 23, 2,  21, 1, 13, 12};
+    bool m_bomb;
+    int m_number_key;
+
+public:
+    Letters(bool isBomb, sf::Texture& fname, float x, float y)
+    {
+        m_bomb = isBomb;
+        m_number_key = rand() % 26;
+        m_code_key = m_code_letters[m_number_key];
+
+        if (isBomb) {
+            m_number_key += 26;
+        }
+
+        m_coordinate_x = x;
+        m_coordinate_y = y;
+        // std::cout << "Key number " << m_number_key << "\n";
+        x = static_cast<float>((m_number_key) % 9) * 91;
+        /*	std::cout << x << " ";*/
+        y = static_cast<float>((m_number_key) / 9) * 138;
+        // std::cout << y;
+
+        Add_Letter(fname, x, y, 86, 128);
+    }
+
+    int Get_key();
+    bool
+    Delete_letter_beyond(Letters* letter, My_Sprite& static_spr_mas, int hp);
+    bool Check_code_key(int key, int& score);
+    bool Isbomb();
+    void Update(sf::Sprite& sprite, Difficult& dif, float time);
+};
+
+void Press_button(
+        std::list<Letters*>& list_letters,
+        int& hp,
+        int& score,
+        My_Sprite& static_spr_mas,
+        int code);
