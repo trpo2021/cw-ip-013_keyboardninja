@@ -1,9 +1,11 @@
 #include <SFML/Graphics.hpp>
 
-#include "ninjalib/helper.h"
-#include "ninjalib/main_menu.h"
+#include "helper.h"
+#include "letters.h"
+#include "main_menu.h"
 
 #include <cstdlib>
+
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -93,7 +95,7 @@ int start_game(int& showMenu)
                         list_letters,
                         hp,
                         score,
-                        static_spr_mas,
+                        *static_spr_mas[SPR_HP],
                         event.key.code);
             }
         }
@@ -105,6 +107,7 @@ int start_game(int& showMenu)
             int i, j;
             for (i = 12; i < 16; i++)
                 window.draw(static_spr_mas[i]->Get_sprite());
+
             txt_score.setPosition(800, 380);
             window.draw(txt_score);
             window.display();
@@ -150,8 +153,11 @@ int start_game(int& showMenu)
                 bomb_key = press_count + (rand() % 5);
             }
 
-            if (timer > deley) { // Генерирует новое место и значение для буквы
-                                 // M каждые delay сек.
+            if (timer > deley
+                && difficult.m_barrier
+                        >= list_letters.size()) { // Генерирует новое место и
+                                                  // значение для буквы
+                // M каждые delay сек.
 
                 int x = 200 + (rand() % (1338 - 150 + 1));
                 if (press_count >= bomb_key
@@ -173,7 +179,8 @@ int start_game(int& showMenu)
 
             for (std::list<Letters*>::iterator it = list_letters.begin();
                  it != list_letters.end();)
-                if ((*it)->Delete_letter_beyond(*it)) {
+                if ((*it)->Delete_letter_beyond(
+                            (*it), *static_spr_mas[SPR_HP], hp)) {
                     delete *it;
                     it = list_letters.erase(it);
                 } else
@@ -187,6 +194,7 @@ int start_game(int& showMenu)
             }
         }
         window.display();
+        
         // Действия в меню паузы
         while (isPause) {
             while (window.pollEvent(event))
