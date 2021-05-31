@@ -33,18 +33,29 @@ protected:
 
 struct Difficult {
     float m_boost, m_start_speed /*, m_time*/;
-    unsigned short m_barrier;
+    unsigned short m_barrier, m_choice;
 
-    Difficult(float boost = 0.2, float speed = 0.2, unsigned short barrier = 4)
-        : m_boost(boost), m_start_speed(speed), m_barrier(barrier)
+    Difficult(
+            float boost = 0.2,
+            float speed = 0.2,
+            unsigned short barrier = 4,
+            unsigned short choice = 0)
+        : m_boost(boost),
+          m_start_speed(speed),
+          m_barrier(barrier),
+          m_choice(choice)
     {
-
     }
-    void Diff_choose(float boost, float speed, unsigned short barrier)
+    void Diff_choose(
+            float boost,
+            float speed,
+            unsigned short barrier,
+            unsigned short choice)
     {
         m_boost = boost;
         m_start_speed = speed;
         m_barrier = barrier;
+        m_choice = choice;
     }
 };
 
@@ -74,3 +85,6 @@ enum M_Sprite {
     SPR_GAME_BG_7,
     SPR_GAME_BG_8
 };
+
+void scoreInput(sf::Text txt_score, sf::RenderWindow& window);
+void scoreOutput(int score, int choice);

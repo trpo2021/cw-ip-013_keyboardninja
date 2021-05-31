@@ -6,6 +6,7 @@
 int main_menu(
         sf::RenderWindow& window,
         Difficult& difficult,
+        sf::Text txt_score,
         std::vector<My_Sprite*>& static_spr_mas)
 { // Функция главного меню
     using namespace sf;
@@ -77,6 +78,7 @@ int main_menu(
 
         if (ShowScores) {
             window.draw(static_spr_mas[SPR_SHOWSCORE]->Get_sprite());
+            scoreInput(txt_score, window);
             if (IntRect(315, 826, 490, 50).contains(Mouse::getPosition(window))
                 && Mouse::isButtonPressed(Mouse::Left))
                 ShowScores = 0;
@@ -91,21 +93,21 @@ int main_menu(
                     IntRect(373, 349, 217, 257)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0000005, 0.1, 5);
+                difficult.Diff_choose(0.005, 0.1, 5, 0);
 
                 isMenu = false;
             } else if (
                     IntRect(667, 355, 210, 247)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.00000010, 0.1, 7);
+                difficult.Diff_choose(0.0010, 0.1, 7, 1);
 
                 isMenu = false;
             } else if (
                     IntRect(954, 352, 204, 286)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.00000015, 0.1, 10);
+                difficult.Diff_choose(0.0015, 0.1, 10, 2);
                 isMenu = false;
             }
         }
