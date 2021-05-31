@@ -22,6 +22,15 @@ int start_game(int& showMenu)
     float deley = 1000;
     Clock clock;
 
+    Font font;
+    if (!font.loadFromFile("src/ninja/font.ttf")) {
+        std::cerr << "Can't finde .ttf ";
+    }
+
+    Text txt_score("", font, 60);
+    txt_score.setFillColor(Color::White);
+    txt_score.setPosition(95, 25);
+
     std::ifstream inf_images("src/ninja/static_images_names.txt");
     std::string str[help::line_count];
     if (!(inf_images.is_open())) {
@@ -51,7 +60,7 @@ int start_game(int& showMenu)
     int hp = 3;
 
     if (showMenu == 1) {
-        if (!main_menu(window, difficult, static_spr_mas))
+        if (!main_menu(window, difficult, txt_score, static_spr_mas))
             return 0;
     }
 
@@ -59,15 +68,6 @@ int start_game(int& showMenu)
     int bomb_key = 0;
     int score = 0;
     int BG_num = 16 + rand() % 9;
-
-    Font font;
-    if (!font.loadFromFile("src/ninja/font.ttf")) {
-        std::cerr << "Can't finde .ttf ";
-    }
-
-    Text txt_score("", font, 60);
-    txt_score.setFillColor(Color::White);
-    txt_score.setPosition(95, 25);
 
     std::list<Letters*> list_letters;
 
@@ -98,7 +98,7 @@ int start_game(int& showMenu)
             }
         }
 
-        while (!hp) {
+        while (hp <= 0) {
             while (window.pollEvent(event))
                 if (event.type == Event::Closed)
                     window.close();
@@ -114,6 +114,7 @@ int start_game(int& showMenu)
                             .contains(Mouse::getPosition(window))) {
                     static_spr_mas[j]->Get_sprite().setColor(Color::Red);
                     if (Mouse::isButtonPressed(Mouse::Left)) {
+                        scoreOutput(score, difficult.m_choice);
                         switch (j) {
                         case 13:
                             return -1;
