@@ -194,7 +194,7 @@ int start_game(int& showMenu)
             }
         }
         window.display();
-        
+
         // Действия в меню паузы
         while (isPause) {
             while (window.pollEvent(event))
