@@ -52,6 +52,7 @@ $(OBJ_DIR)/%.o: %.$(SRC_EXT)
 
 .PHONY: test
 test: $(TEST_PATH)
+	./$(TEST_PATH)
 
 -include $(DEPS_TEST)
 	
@@ -61,10 +62,6 @@ $(TEST_PATH): $(TEST_OBJECTS) $(LIB_PATH)
 .PHONY: run
 run: $(APP_PATH)
 	./$(APP_PATH)
-
-.PHONY: test_run
-test_run:$(TEST_PATH)
-	./$(TEST_PATH)
 
 .PHONY: clean
 clean:

@@ -10,17 +10,25 @@ int Letters::Get_key()
     return m_code_key;
 }
 
+int Letters::Get_coordinate_x()
+{
+    return m_coordinate_x;
+}
+
+int Letters::Get_coordinate_y()
+{
+    return m_coordinate_x;
+}
+
 bool Letters::Check_code_key(int key, int& score, int& change_speed)
 {
     if (m_code_key == key) {
         if (!m_bomb) {
             score += 5;
             change_speed = 1;
-            return true;
-        } else
-            return true;
+        }
+        return true;
     }
-
     return false;
 }
 
@@ -29,10 +37,10 @@ bool Letters::Isbomb()
     return m_bomb;
 }
 
-void Lose_health(My_Sprite& static_spr_mas, int& hp)
+void Lose_health(My_Sprite*& static_spr_mas, int& hp)
 {
     hp--;
-    static_spr_mas.Get_sprite().setTextureRect(
+    static_spr_mas->Get_sprite().setTextureRect(
             sf::IntRect(0, 0, 80, 68 * hp)); // function lose health
 }
 
@@ -40,7 +48,7 @@ void Press_button(
         std::list<Letters*>& list_letters,
         int& hp,
         int& score,
-        My_Sprite& static_spr_mas,
+        My_Sprite*& static_spr_mas,
         int code,
         int& change_speed)
 {
@@ -79,14 +87,10 @@ void Letters::Update(
     sprite.setPosition(m_coordinate_x, m_coordinate_y);
 }
 
-bool Letters::Delete_letter_beyond(
-        Letters* letter, My_Sprite& static_spr_mas, int hp)
+bool Letters::Delete_letter_beyond(int coordinate_y, int hp)
 {
-    if (letter->m_coordinate_y >= 960) {
-        // if(!(letter->Isbomb()))
-        //     Lose_health(static_spr_mas, hp);
+    if (m_coordinate_y >= 960) 
         return true;
-    }
 
     return false;
 }
