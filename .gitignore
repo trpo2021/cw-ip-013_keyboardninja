@@ -1,0 +1,10 @@
+*~
+*#
+*.exe
+*.o
+*.d
+*.out
+*.a
+bin/ninja/ninja
+*.vscode
+

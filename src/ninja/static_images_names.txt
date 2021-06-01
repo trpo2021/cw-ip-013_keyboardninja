@@ -1,0 +1,24 @@
+Background_menu.jpg
+Start_menu.png 100 105
+About_menu.png 150 200
+Hight_score_menu.png 30 14
+Exit_menu.png 150 307
+Rules.jpg 637 0.5
+Difficulty.jpg 0 0
+ShowScore.jpg 0 0
+pause.png 0 0
+hp.png 5 124
+menu_pause.png 504 356
+letters_tex.png
+Menu_dead.png 270 60
+Replay_dead.png 660 460
+GoToMenu_dead.png 660 550
+Exit_dead.png 660 650
+game_bg1.jpg 0 0
+game_bg2.jpg 0 0
+game_bg3.jpg 0 0
+game_bg4.jpg 0 0
+game_bg5.jpg 0 0
+game_bg6.jpg 0 0
+game_bg7.jpg 0 0
+game_bg8.jpg 0 0
