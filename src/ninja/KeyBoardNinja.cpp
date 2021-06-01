@@ -23,7 +23,6 @@ int start_game(int& showMenu)
 
     float timer = 0;
     Clock clock;
-    Player player;
 
     Font font;
     if (!font.loadFromFile("src/ninja/font.ttf")) {
