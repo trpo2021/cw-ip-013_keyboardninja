@@ -21,7 +21,6 @@ int start_game(int& showMenu)
     using namespace sf;
 
     float timer = 0;
-    float deley = 1000;
     Clock clock;
 
     Font font;
@@ -70,6 +69,7 @@ int start_game(int& showMenu)
     int bomb_key = 0;
     int score = 0;
     int BG_num = 16 + rand() % 9;
+    int change_speed = 0;
 
     std::list<Letters*> list_letters;
 
@@ -96,7 +96,8 @@ int start_game(int& showMenu)
                         hp,
                         score,
                         *static_spr_mas[SPR_HP],
-                        event.key.code);
+                        event.key.code,
+                        change_speed);
             }
         }
 
@@ -120,8 +121,10 @@ int start_game(int& showMenu)
                         scoreOutput(score, difficult.m_choice);
                         switch (j) {
                         case 13:
+                            difficult.Reset_speed();
                             return -1;
                         case 14:
+                            difficult.Reset_speed();
                             return 1;
                         case 15:
                             return 0;
@@ -150,11 +153,12 @@ int start_game(int& showMenu)
             }
 
             if (press_count
-                == 5) { // Генерация бомб активируется после 5 нажатия
-                bomb_key = press_count + (rand() % 5);
+                == difficult.m_bomb_ger) { // Генерация бомб активируется после
+                                           // 5 нажатия
+                bomb_key = press_count + (rand() % 10);
             }
 
-            if (timer > deley
+            if (timer > difficult.m_letter_ger
                 && difficult.m_barrier
                         >= list_letters.size()) { // Генерирует новое место и
                                                   // значение для буквы
@@ -190,7 +194,12 @@ int start_game(int& showMenu)
             for (std::list<Letters*>::iterator it = list_letters.begin();
                  it != list_letters.end();
                  it++) {
-                (*it)->Update((*it)->Get_sprite(), difficult, time);
+                (*it)->Update(
+                        (*it)->Get_sprite(),
+                        difficult,
+                        score,
+                        time,
+                        change_speed);
                 window.draw((*it)->Get_sprite());
             }
         }
@@ -213,11 +222,13 @@ int start_game(int& showMenu)
 
             if (IntRect(788, 415, 148, 45).contains(Mouse::getPosition(window))
                 && Mouse::isButtonPressed(Mouse::Left)) {
+                difficult.Reset_speed();
                 return -1;
             }
 
             if (IntRect(649, 455, 224, 45).contains(Mouse::getPosition(window))
                 && Mouse::isButtonPressed(Mouse::Left)) {
+                difficult.Reset_speed();
                 return 1;
             }
 
