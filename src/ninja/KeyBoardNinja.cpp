@@ -160,33 +160,26 @@ int start_game(int& showMenu)
                     isPause = 1;
             }
 
-            if (press_count % difficult.m_bomb_ger
-                == 0) { // Генерация бомб активируется после
-                // 5 нажатия
+            if (press_count % difficult.m_bomb_ger == 0) {
                 bomb_key = press_count + (rand() % 10);
             }
 
             if (timer > difficult.m_letter_ger
-                && difficult.m_barrier
-                        >= list_letters.size()) { // Генерирует новое место и
-                                                  // значение для буквы
-                // M каждые delay сек.
-
+                && difficult.m_barrier >= list_letters.size()) {
                 int x = 200 + (rand() % (1338 - 150 + 1));
-                if (press_count >= bomb_key
-                    && bomb_key) { // Нажатие для генирации бомбы.
+                if (press_count >= bomb_key && bomb_key) {
                     list_letters.push_back(new Letters(
                             1,
                             static_spr_mas[SPR_LETTERS]->Get_Texture(),
                             static_cast<float>(x),
-                            0));
+                            -138));
                     bomb_key = 0;
                 } else
                     list_letters.push_back(new Letters(
                             0,
                             static_spr_mas[SPR_LETTERS]->Get_Texture(),
                             static_cast<float>(x),
-                            0));
+                            -138));
                 timer = 0;
             }
 

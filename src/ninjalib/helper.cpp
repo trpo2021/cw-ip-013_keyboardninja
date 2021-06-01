@@ -109,6 +109,5 @@ void scoreOutput(int score, int choice)
         sc[choice] = score;
     for (int i = 0; i < help::line_count; i++)
         fc << sc[i] << " ";
-
     fc.close();
 }

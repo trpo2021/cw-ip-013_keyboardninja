@@ -27,12 +27,8 @@ public:
 
         m_coordinate_x = x;
         m_coordinate_y = y;
-        // std::cout << "Key number " << m_number_key << "\n";
         x = static_cast<float>((m_number_key) % 9) * 91;
-        /*	std::cout << x << " ";*/
         y = static_cast<float>((m_number_key) / 9) * 138;
-        // std::cout << y;
-
         Add_Letter(fname, x, y, 86, 128);
     }
 
