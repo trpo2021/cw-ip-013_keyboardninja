@@ -14,6 +14,7 @@
 #include <vector>
 
 Difficult difficult;
+Player player;
 
 int start_game(int& showMenu)
 {
@@ -58,7 +59,6 @@ int start_game(int& showMenu)
     RenderWindow window(VideoMode(1536, 960), "KeyBoardNinja");
 
     int isPause = 0;
-    int hp = 3;
 
     if (showMenu == 1) {
         if (!main_menu(window, difficult, txt_score, static_spr_mas))
@@ -67,7 +67,6 @@ int start_game(int& showMenu)
 
     int press_count = 0;
     int bomb_key = 0;
-    int score = 0;
     int BG_num = 16 + rand() % 9;
     int change_speed = 0;
 
@@ -93,15 +92,15 @@ int start_game(int& showMenu)
 
                 Press_button(
                         list_letters,
-                        hp,
-                        score,
+                        player.m_hp,
+                        player.m_score,
                         *static_spr_mas[SPR_HP],
                         event.key.code,
                         change_speed);
             }
         }
 
-        while (hp <= 0) {
+        while (player.m_hp <= 0) {
             while (window.pollEvent(event))
                 if (event.type == Event::Closed)
                     window.close();
@@ -118,7 +117,7 @@ int start_game(int& showMenu)
                             .contains(Mouse::getPosition(window))) {
                     static_spr_mas[j]->Get_sprite().setColor(Color::Red);
                     if (Mouse::isButtonPressed(Mouse::Left)) {
-                        scoreOutput(score, difficult.m_choice);
+                        scoreOutput(player.m_score, difficult.m_choice);
                         switch (j) {
                         case 13:
                             difficult.Reset_speed();
@@ -134,7 +133,7 @@ int start_game(int& showMenu)
             }
         }
 
-        char_score << score;
+        char_score << player.m_score;
         txt_score.setString(char_score.str());
 
         window.draw(static_spr_mas[BG_num]->Get_sprite());
@@ -142,7 +141,7 @@ int start_game(int& showMenu)
             window.draw(static_spr_mas[i]->Get_sprite());
         window.draw(txt_score);
 
-        if (!isPause && hp > 0) {
+        if (!isPause && player.m_hp > 0) {
             static_spr_mas[SPR_PAUSE]->Get_sprite().setColor(Color::White);
 
             if (IntRect(0, 1, 90, 89).contains(Mouse::getPosition(window))) {
@@ -152,9 +151,9 @@ int start_game(int& showMenu)
                     isPause = 1;
             }
 
-            if (press_count
-                == difficult.m_bomb_ger) { // Генерация бомб активируется после
-                                           // 5 нажатия
+            if (press_count % difficult.m_bomb_ger
+                == 0) { // Генерация бомб активируется после
+                // 5 нажатия
                 bomb_key = press_count + (rand() % 10);
             }
 
@@ -165,6 +164,15 @@ int start_game(int& showMenu)
                 // M каждые delay сек.
 
                 int x = 200 + (rand() % (1338 - 150 + 1));
+                if (player.m_score % difficult.m_regen == 0 && player.m_score) {
+                    if (player.m_hp < 3) {
+                        player.m_hp++;
+                        player.update_hp(
+                                static_spr_mas[SPR_HP]->Get_sprite(),
+                                player.m_hp);
+                        press_count++;
+                    }
+                }
                 if (press_count >= bomb_key
                     && bomb_key) { // Нажатие для генирации бомбы.
                     list_letters.push_back(new Letters(
@@ -172,7 +180,7 @@ int start_game(int& showMenu)
                             static_spr_mas[SPR_LETTERS]->Get_Texture(),
                             static_cast<float>(x),
                             0));
-                    press_count = 0;
+                    bomb_key = 0;
                 } else
                     list_letters.push_back(new Letters(
                             0,
@@ -185,7 +193,7 @@ int start_game(int& showMenu)
             for (std::list<Letters*>::iterator it = list_letters.begin();
                  it != list_letters.end();)
                 if ((*it)->Delete_letter_beyond(
-                            (*it), *static_spr_mas[SPR_HP], hp)) {
+                            (*it), *static_spr_mas[SPR_HP], player.m_hp)) {
                     delete *it;
                     it = list_letters.erase(it);
                 } else
@@ -197,7 +205,7 @@ int start_game(int& showMenu)
                 (*it)->Update(
                         (*it)->Get_sprite(),
                         difficult,
-                        score,
+                        player.m_score,
                         time,
                         change_speed);
                 window.draw((*it)->Get_sprite());
