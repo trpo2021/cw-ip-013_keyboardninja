@@ -14,7 +14,6 @@
 #include <vector>
 
 Difficult difficult;
-Player player;
 
 int start_game(int& showMenu)
 {
@@ -23,6 +22,7 @@ int start_game(int& showMenu)
 
     float timer = 0;
     Clock clock;
+    Player player;
 
     Font font;
     if (!font.loadFromFile("src/ninja/font.ttf")) {
@@ -97,6 +97,15 @@ int start_game(int& showMenu)
                         *static_spr_mas[SPR_HP],
                         event.key.code,
                         change_speed);
+
+                if (player.m_score % difficult.m_regen == 0 && player.m_score) {
+                    if (player.m_hp < 3) {
+                        player.m_hp++;
+                        player.update_hp(
+                                static_spr_mas[SPR_HP]->Get_sprite(),
+                                player.m_hp);
+                    }
+                }
             }
         }
 
@@ -164,15 +173,7 @@ int start_game(int& showMenu)
                 // M каждые delay сек.
 
                 int x = 200 + (rand() % (1338 - 150 + 1));
-                if (player.m_score % difficult.m_regen == 0 && player.m_score) {
-                    if (player.m_hp < 3) {
-                        player.m_hp++;
-                        player.update_hp(
-                                static_spr_mas[SPR_HP]->Get_sprite(),
-                                player.m_hp);
-                        press_count++;
-                    }
-                }
+
                 if (press_count >= bomb_key
                     && bomb_key) { // Нажатие для генирации бомбы.
                     list_letters.push_back(new Letters(
