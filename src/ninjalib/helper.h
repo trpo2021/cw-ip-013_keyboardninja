@@ -32,30 +32,42 @@ protected:
 };
 
 struct Difficult {
-    float m_boost, m_start_speed /*, m_time*/;
-    unsigned short m_barrier, m_choice;
+    float m_boost = 0.01, m_start_speed, m_start_speed_inf, m_letter_ger;
+    int m_bomb_ger;
+    unsigned short m_choice, m_barrier;
 
     Difficult(
-            float boost = 0.2,
             float speed = 0.2,
-            unsigned short barrier = 4,
-            unsigned short choice = 0)
-        : m_boost(boost),
-          m_start_speed(speed),
-          m_barrier(barrier),
-          m_choice(choice)
+            unsigned short barrier = 10,
+            float letter_ger = 1000,
+            int bomb_ger = 5,
+            unsigned short choise = 0)
+        : m_start_speed(speed),
+          m_start_speed_inf(speed),
+          m_letter_ger(letter_ger),
+          m_bomb_ger(bomb_ger),
+          m_choice(choise),
+          m_barrier(barrier)
     {
     }
     void Diff_choose(
-            float boost,
             float speed,
-            unsigned short barrier,
-            unsigned short choice)
+            int barrier,
+            float letter_ger,
+            int bomb_ger,
+            unsigned short choise)
     {
-        m_boost = boost;
+        m_letter_ger = letter_ger;
+        m_bomb_ger = bomb_ger;
         m_start_speed = speed;
+        m_start_speed_inf = speed;
         m_barrier = barrier;
-        m_choice = choice;
+        m_choice = choise;
+    }
+
+    void Reset_speed()
+    {
+        m_start_speed = m_start_speed_inf;
     }
 };
 

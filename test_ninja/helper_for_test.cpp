@@ -6,10 +6,8 @@
 #include <iostream>
 #include <list>
 
-
 void Create_letters(std::list<Letters*>& A, int x, int y)
 {
-    
     My_Sprite B("letters_tex.png");
     for (int i = 0, swing; i < 3; i++) {
         A.push_back(new Letters(swing, B.Get_Texture(), x, y));

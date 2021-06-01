@@ -10,13 +10,15 @@ int Letters::Get_key()
     return m_code_key;
 }
 
-bool Letters::Check_code_key(int key, int& score)
+bool Letters::Check_code_key(int key, int& score, int& change_speed)
 {
     if (m_code_key == key) {
-        if (!m_bomb)
+        if (!m_bomb) {
             score += 5;
-
-        return true;
+            change_speed = 1;
+            return true;
+        } else
+            return true;
     }
 
     return false;
@@ -39,19 +41,21 @@ void Press_button(
         int& hp,
         int& score,
         My_Sprite& static_spr_mas,
-        int code)
+        int code,
+        int& change_speed)
 {
     for (std::list<Letters*>::iterator it = list_letters.begin(),
                                        end = list_letters.end(),
                                        tmp = it;
          it != list_letters.end();) {
         tmp++;
-        if ((tmp == end && !(*it)->Check_code_key(code, score))
-            or ((*it)->Isbomb() and (*it)->Check_code_key(code, score))) {
+        if ((tmp == end && !(*it)->Check_code_key(code, score, change_speed))
+            or ((*it)->Isbomb()
+                and (*it)->Check_code_key(code, score, change_speed))) {
             Lose_health(static_spr_mas, hp);
         }
 
-        if ((*it)->Check_code_key(code, score)) {
+        if ((*it)->Check_code_key(code, score, change_speed)) {
             delete *it;
             it = list_letters.erase(it);
             break;
@@ -60,10 +64,18 @@ void Press_button(
     }
 }
 
-void Letters::Update(sf::Sprite& sprite, Difficult& dif, float time)
+void Letters::Update(
+        sf::Sprite& sprite,
+        Difficult& dif,
+        int score,
+        float time,
+        int& change_speed)
 {
     m_coordinate_y += dif.m_start_speed * time;
-    dif.m_start_speed += dif.m_boost;
+    if (score % 50 == 0 && score && change_speed && dif.m_start_speed <= 0.59) {
+        dif.m_start_speed += dif.m_boost;
+        change_speed = 0;
+    }
     sprite.setPosition(m_coordinate_x, m_coordinate_y);
 }
 

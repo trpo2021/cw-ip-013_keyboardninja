@@ -39,9 +39,14 @@ public:
     int Get_key();
     bool
     Delete_letter_beyond(Letters* letter, My_Sprite& static_spr_mas, int hp);
-    bool Check_code_key(int key, int& score);
+    bool Check_code_key(int key, int& score, int& change_speed);
     bool Isbomb();
-    void Update(sf::Sprite& sprite, Difficult& dif, float time);
+    void
+    Update(sf::Sprite& sprite,
+           Difficult& dif,
+           int score,
+           float time,
+           int& change_speed);
 };
 
 void Press_button(
@@ -49,4 +54,5 @@ void Press_button(
         int& hp,
         int& score,
         My_Sprite& static_spr_mas,
-        int code);
+        int code,
+        int& change_speed);
