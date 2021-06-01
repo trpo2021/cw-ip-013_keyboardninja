@@ -89,7 +89,7 @@ void Letters::Update(
 
 bool Letters::Delete_letter_beyond(int coordinate_y, int hp)
 {
-    if (m_coordinate_y >= 960) 
+    if (m_coordinate_y >= 960)
         return true;
 
     return false;

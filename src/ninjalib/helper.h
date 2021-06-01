@@ -35,7 +35,8 @@ struct Player {
     int m_score;
     int m_hp;
     Player(int score = 0, int hp = 3) : m_score(score), m_hp(hp)
-    {}
+    {
+    }
     void update_hp(sf::Sprite& SPR_hp, int hp)
     {
         SPR_hp.setTextureRect(sf::IntRect(0, 0, 80, 68 * hp));

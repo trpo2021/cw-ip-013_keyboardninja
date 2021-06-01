@@ -15,7 +15,6 @@
 
 Difficult difficult;
 
-
 int start_game(int& showMenu)
 {
     Player player;
@@ -191,9 +190,11 @@ int start_game(int& showMenu)
                 timer = 0;
             }
 
-            for (std::list<Letters*>::iterator it = list_letters.begin(); it != list_letters.end(); )
-                if ((*it)->Delete_letter_beyond((*it)->Get_coordinate_y(), player.m_hp)) {
-                    if(!((*it)->Isbomb()))
+            for (std::list<Letters*>::iterator it = list_letters.begin();
+                 it != list_letters.end();)
+                if ((*it)->Delete_letter_beyond(
+                            (*it)->Get_coordinate_y(), player.m_hp)) {
+                    if (!((*it)->Isbomb()))
                         Lose_health(static_spr_mas[SPR_HP], player.m_hp);
                     delete *it;
                     it = list_letters.erase(it);
