@@ -31,9 +31,21 @@ protected:
     sf::Sprite m_sprite;
 };
 
+struct Player {
+    int m_score;
+    int m_hp;
+    Player(int score = 0, int hp = 3) : m_score(score), m_hp(hp)
+    {
+    }
+    void update_hp(sf::Sprite& SPR_hp, int hp)
+    {
+        SPR_hp.setTextureRect(sf::IntRect(0, 0, 80, 68 * hp));
+    }
+};
+
 struct Difficult {
     float m_boost = 0.01, m_start_speed, m_start_speed_inf, m_letter_ger;
-    int m_bomb_ger;
+    int m_bomb_ger, m_regen;
     unsigned short m_choice, m_barrier;
 
     Difficult(
@@ -41,11 +53,13 @@ struct Difficult {
             unsigned short barrier = 10,
             float letter_ger = 1000,
             int bomb_ger = 5,
+            int regen = 200,
             unsigned short choise = 0)
         : m_start_speed(speed),
           m_start_speed_inf(speed),
           m_letter_ger(letter_ger),
           m_bomb_ger(bomb_ger),
+          m_regen(regen),
           m_choice(choise),
           m_barrier(barrier)
     {
@@ -55,10 +69,12 @@ struct Difficult {
             int barrier,
             float letter_ger,
             int bomb_ger,
+            int regen,
             unsigned short choise)
     {
         m_letter_ger = letter_ger;
         m_bomb_ger = bomb_ger;
+        m_regen = regen;
         m_start_speed = speed;
         m_start_speed_inf = speed;
         m_barrier = barrier;
@@ -97,6 +113,8 @@ enum M_Sprite {
     SPR_GAME_BG_7,
     SPR_GAME_BG_8
 };
+
+void update_hp(sf::Sprite& SPR_hp, int hp);
 
 void scoreInput(sf::Text txt_score, sf::RenderWindow& window);
 void scoreOutput(int score, int choice);
