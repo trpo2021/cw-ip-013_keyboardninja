@@ -93,21 +93,21 @@ int main_menu(
                     IntRect(373, 349, 217, 257)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.005, 0.1, 5, 0);
+                difficult.Diff_choose(0.000005, 0.1, 5, 0);
 
                 isMenu = false;
             } else if (
                     IntRect(667, 355, 210, 247)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0010, 0.1, 7, 1);
+                difficult.Diff_choose(0.000001, 0.2, 7, 1);
 
                 isMenu = false;
             } else if (
                     IntRect(954, 352, 204, 286)
                             .contains(Mouse::getPosition(window))
                     && Mouse::isButtonPressed(Mouse::Left)) {
-                difficult.Diff_choose(0.0015, 0.1, 10, 2);
+                difficult.Diff_choose(0.0000015, 0.3, 10, 2);
                 isMenu = false;
             }
         }

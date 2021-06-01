@@ -68,7 +68,7 @@ void scoreInput(sf::Text txt_score, sf::RenderWindow& window)
 
     txt_score.setCharacterSize(90);
 
-    std::ifstream fs("src/ninjalib/score.txt", std::ios::in | std::ios::binary);
+    std::ifstream fs("src/ninja/score.txt", std::ios::in | std::ios::binary);
 
     if (!fs)
         std::cout << "File open error!" << std::endl;
@@ -90,48 +90,7 @@ void scoreOutput(int score, int choice)
     std::stringstream m_str_stream;
     std::string mass;
 
-    std::ifstream fs("src/ninjalib/score.txt", std::ios::in);
-
-    if (!fs)
-        std::cout << "File open error!" << std::endl;
-    for (int i = 0; i < help::line_count; i++) {
-        fs >> mass;
-        m_str_stream << mass;
-        m_str_stream >> sc[i];
-        m_str_stream.str("");
-        m_str_stream.clear();
-    }
-}
-
-void scoreInput(sf::Text txt_score, sf::RenderWindow& window)
-{
-    std::string mass;
-
-    txt_score.setCharacterSize(90);
-
-    std::ifstream fs("src/ninjalib/score.txt", std::ios::in | std::ios::binary);
-
-    if (!fs)
-        std::cout << "File open error!" << std::endl;
-
-    for (int r = 0; r < help::line_count; r++) {
-        fs >> mass;
-        std::ostringstream char_score;
-        char_score << mass;
-        txt_score.setString(char_score.str());
-        txt_score.setPosition(750, 340 + (r * 135));
-        window.draw(txt_score);
-    }
-    fs.close();
-}
-
-void scoreOutput(int score, int choice)
-{
-    int sc[3];
-    std::stringstream m_str_stream;
-    std::string mass;
-
-    std::ifstream fs("src/ninjalib/score.txt", std::ios::in);
+    std::ifstream fs("src/ninja/score.txt", std::ios::in);
 
     if (!fs)
         std::cout << "File open error!" << std::endl;
@@ -144,7 +103,7 @@ void scoreOutput(int score, int choice)
     }
     fs.close();
 
-    std::ofstream fc("src/ninjalib/score.txt", std::ios::out | std::ios::trunc);
+    std::ofstream fc("src/ninja/score.txt", std::ios::out | std::ios::trunc);
 
     if (sc[choice] < score)
         sc[choice] = score;
